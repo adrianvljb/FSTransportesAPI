@@ -72,3 +72,4 @@ C:\Users\Adria\OneDrive\Documents\Repositorios\Pruebas de clase\FSTransportesAPI
 C:\Users\Adria\OneDrive\Documents\Repositorios\Pruebas de clase\FSTransportesAPI.WebApi\FSTransportesAPI\obj\Debug\net10.0\FSTransportesAPI.pdb
 C:\Users\Adria\OneDrive\Documents\Repositorios\Pruebas de clase\FSTransportesAPI.WebApi\FSTransportesAPI\obj\Debug\net10.0\FSTransportesAPI.genruntimeconfig.cache
 C:\Users\Adria\OneDrive\Documents\Repositorios\Pruebas de clase\FSTransportesAPI.WebApi\FSTransportesAPI\obj\Debug\net10.0\ref\FSTransportesAPI.dll
+C:\Users\Adria\OneDrive\Documents\Repositorios\Pruebas de clase\FSTransportesAPI.WebApi\FSTransportesAPI\obj\Debug\net10.0\FSTransportesAPI.sourcelink.json
