@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FSTransportesAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e9aaeae0aeed7c06b379649c182425babfb35516")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cbf2ef0bde4fabaa6a0ef659ec74a9891a98ac33")]
 [assembly: System.Reflection.AssemblyProductAttribute("FSTransportesAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FSTransportesAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

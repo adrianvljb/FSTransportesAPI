@@ -10,6 +10,7 @@ namespace FSTransportesAPI.Infrastructure.SQLServer.Maps
         {
             builder.ToTable("Usuarios");
 
+            // Define explícitamente la llave primaria para resolver el error CS1061/EF
             builder.HasKey(e => e.IdUsuario);
 
             builder.Property(e => e.NombreUsuario)
@@ -25,7 +26,7 @@ namespace FSTransportesAPI.Infrastructure.SQLServer.Maps
             builder.Property(e => e.Activo)
                 .IsRequired();
 
-            
+            // Configuración de auditoría
             builder.Property(e => e.UsuarioAgrega).IsRequired();
             builder.Property(e => e.FechaAgrega).HasColumnType("datetime").IsRequired();
             builder.Property(e => e.UsuarioModifica);

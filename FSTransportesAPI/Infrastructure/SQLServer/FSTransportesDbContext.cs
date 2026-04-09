@@ -11,21 +11,22 @@ namespace FSTransportesAPI.Infrastructure.SQLServer
         {
         }
 
-        public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Viaje> Viajes { get; set; }
         public DbSet<ViajeDetalle> ViajesDetalles { get; set; }
         public DbSet<Transportista> Transportistas { get; set; }
         public DbSet<Sucursal> Sucursales { get; set; }
         public DbSet<Colaborador> Colaboradores { get; set; }
-
-       
         public DbSet<ColaboradorSucursal> ColaboradoresSucursales { get; set; }
+        public DbSet<Usuario> Usuarios { get; set; } // Asegúrate de tener esta línea
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            // Aplicar configuraciones de Mapas
+            // REGISTRO DE MAPAS
+            
+            modelBuilder.ApplyConfiguration(new UsuarioMap()); 
+
             modelBuilder.ApplyConfiguration(new ViajeMap());
             modelBuilder.ApplyConfiguration(new ViajeDetalleMap());
             modelBuilder.ApplyConfiguration(new TransportistaMap());
