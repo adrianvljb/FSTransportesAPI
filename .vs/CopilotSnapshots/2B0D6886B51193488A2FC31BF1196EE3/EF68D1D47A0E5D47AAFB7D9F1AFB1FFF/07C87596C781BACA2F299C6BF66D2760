@@ -1,0 +1,18 @@
+﻿namespace FSTransportesAPI.Common
+{
+    public static class Mensajes
+    {
+        public const string ErrorDistanciaSucursalExcedida = "La distancia entre el colaborador y la sucursal no puede ser mayor a 50 kilómetros.";
+        public const string ErrorDistanciaCero = "La distancia debe ser mayor a cero.";
+        public const string ErrorLimiteKilometrajeViaje = "El total de distancia acumulada para este viaje excede el límite permitido de 100 kilómetros.";
+        public const string ErrorColaboradorYaViajoHoy = "Uno o más colaboradores ya tienen un viaje registrado en esta fecha.";
+        public const string AsignacionDuplicada = "El colaborador ya está asignado a esta sucursal.";
+        public const string RegistroExitoso = "Registro guardado exitosamente.";
+
+        public const string ErrorCredencialesInvalidas = "Usuario o contraseña incorrectos.";
+        public const string ErrorUsuarioInactivo = "El usuario se encuentra inactivo.";
+        public const string ErrorRolNoAutorizado = "El usuario no tiene los permisos necesarios. Se requiere rol de Gerente de tienda.";
+        public const string ErrorUsuarioNoEncontrado = "El usuario especificado no existe.";
+        public const string ErrorInesperado = "Ocurrió un error inesperado. Contacte a soporte técnico.";
+    }
+}

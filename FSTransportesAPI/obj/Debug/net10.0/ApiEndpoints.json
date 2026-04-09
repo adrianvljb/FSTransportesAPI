@@ -1,0 +1,95 @@
+[
+  {
+    "ContainingType": "FSTransportesAPI.WebApi.Controllers.ColaboradorController",
+    "Method": "AsignarSucursal",
+    "RelativePath": "api/Colaborador/AsignarSucursal",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "FSTransportesAPI.Entities.DTOs.AsignarSucursalRequestDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ReporteController",
+    "Method": "GetResumen",
+    "RelativePath": "api/Reporte/ResumenViajes",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "inicio",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      },
+      {
+        "Name": "fin",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FSTransportesAPI.WebApi.Controllers.TestErrorController",
+    "Method": "GetBadRequest",
+    "RelativePath": "api/TestError/BadRequest",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FSTransportesAPI.WebApi.Controllers.TestErrorController",
+    "Method": "GetNotFound",
+    "RelativePath": "api/TestError/NotFound",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FSTransportesAPI.WebApi.Controllers.TestErrorController",
+    "Method": "GetServerError",
+    "RelativePath": "api/TestError/ServerError",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FSTransportesAPI.WebApi.Controllers.TestErrorController",
+    "Method": "GetUnauthorized",
+    "RelativePath": "api/TestError/Unauthorized",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FSTransportesAPI.WebApi.Controllers.ViajeController",
+    "Method": "RegistrarViaje",
+    "RelativePath": "api/Viaje/RegistrarViaje",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "FSTransportesAPI.Entities.DTOs.RegistrarViajeRequestDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]

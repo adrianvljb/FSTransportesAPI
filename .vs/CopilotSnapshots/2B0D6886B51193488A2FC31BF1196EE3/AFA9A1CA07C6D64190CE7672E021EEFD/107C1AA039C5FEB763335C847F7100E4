@@ -1,0 +1,39 @@
+﻿using FSTransportesAPI.Common;
+using FSTransportesAPI.Features.Viajes.Domain.DomainRequirements;
+
+namespace FSTransportesAPI.Features.Viajes.Domain.DomainService
+{
+    public sealed class SucursalAppDomain
+    {
+        public string ValidarRegistroViaje(SucursalDomainRequirements requirements)
+        {
+            if (!requirements.EsValido())
+            {
+                // Unimos todos los errores encontrados, igual que en el ejemplo de ComentarioDomainService
+                return string.Join(" | ", requirements.ObtenerErrores());
+            }
+
+            return string.Empty;
+        }
+
+        public string ValidarAsignacion(decimal distancia, bool yaAsignado)
+        {
+            if (distancia > 50)
+            {
+                return Mensajes.ERROR_DISTANCIA_SUCURSAL_EXCEDIDA;
+            }
+
+            if (distancia <= 0)
+            {
+                return Mensajes.ERROR_DISTANCIA_CERO;
+            }
+
+            if (yaAsignado)
+            {
+                return Mensajes.ASIGNACION_DUPLICADA;
+            }
+
+            return string.Empty;
+        }
+    }
+}

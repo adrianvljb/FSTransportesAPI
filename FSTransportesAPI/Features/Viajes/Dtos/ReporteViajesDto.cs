@@ -1,0 +1,20 @@
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace FSTransportesAPI.Features.Viajes.Dtos
+{
+    [ExcludeFromCodeCoverage]
+    public class ReporteViajesDto
+    {
+        public int IdViaje { get; set; }
+
+        public DateTime Fecha { get; set; }
+
+        public string Sucursal { get; set; } = string.Empty;
+
+        public string Transportista { get; set; } = string.Empty;
+
+        public decimal TotalKM { get; set; }
+
+        public decimal TotalPagarTransporte { get; set; }
+    }
+}

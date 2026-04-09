@@ -1,0 +1,31 @@
+﻿using FSTransportesAPI.Common;
+using FSTransportesAPI.Common.Enum;
+using FSTransportesAPI.Entities.DTOs;
+using FSTransportesAPI.Entities.Models;
+
+namespace FSTransportesAPI.Business
+{
+    public class ViajeDomainService
+    {
+        public string ValidarReglasNegocio(Usuario? usuario, RegistrarViajeRequestDto dto)
+        {
+            if (usuario == null) return Mensajes.ErrorUsuarioNoEncontrado;
+            if (!usuario.Activo) return Mensajes.ErrorUsuarioInactivo;
+            if (usuario.IdRol != (int)RolUsuario.GerenteTienda) return Mensajes.ErrorRolNoAutorizado;
+
+            decimal distanciaTotal = dto.Detalles.Sum(d => d.DistanciaKilometros);
+            if (distanciaTotal > 100) return Mensajes.ErrorLimiteKilometrajeViaje;
+
+            return string.Empty;
+        }
+
+        public string ValidarAsignacionSucursal(AsignarSucursalRequestDto dto, bool yaAsignado)
+        {
+            if (dto.DistanciaKilometros > 50) return Mensajes.ErrorDistanciaSucursalExcedida;
+            if (dto.DistanciaKilometros <= 0) return Mensajes.ErrorDistanciaCero;
+            if (yaAsignado) return Mensajes.AsignacionDuplicada;
+
+            return string.Empty;
+        }
+    }
+}

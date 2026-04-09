@@ -1,0 +1,39 @@
+﻿using Microsoft.EntityFrameworkCore;
+using FSTransportesAPI.Data;
+using FSTransportesAPI.Entities.DTOs;
+
+namespace FSTransportesAPI.Business
+{
+    public class ReporteService
+    {
+        private readonly FSTransportesContext _context;
+
+        public ReporteService(FSTransportesContext context)
+        {
+            _context = context;
+        }
+
+        public async Task<List<ReporteViajesDto>> ObtenerResumenViajes(DateTime inicio, DateTime fin)
+        {
+            try
+            {
+                return await _context.Viajes
+                    .Where(v => v.FechaViaje >= inicio && v.FechaViaje <= fin)
+                    .Select(v => new ReporteViajesDto
+                    {
+                        IdViaje = v.IdViaje,
+                        Fecha = v.FechaViaje,
+                        Sucursal = v.Sucursal.Nombre,
+                        Transportista = v.Transportista.Nombre,
+                        TotalKM = v.Detalles.Sum(d => d.DistanciaKilometros),
+                        TotalPagarTransporte = v.Detalles.Sum(d => d.DistanciaKilometros) * v.Transportista.TarifaPorKM
+                    })
+                    .ToListAsync();
+            }
+            catch (Exception)
+            {
+                return new List<ReporteViajesDto>();
+            }
+        }
+    }
+}

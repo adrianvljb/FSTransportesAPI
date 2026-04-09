@@ -1,0 +1,58 @@
+﻿using System;
+using FSTransportesAPI.Common;
+using FSTransportesAPI.Data;
+using FSTransportesAPI.Entities.DTOs;
+using FSTransportesAPI.Entities.Models;
+using Microsoft.EntityFrameworkCore;
+
+namespace FSTransportesAPI.Business
+{
+    public class ColaboradorService
+    {
+        private readonly FSTransportesContext _context;
+        private readonly ViajeDomainService _domainService;
+
+        public ColaboradorService(FSTransportesContext context, ViajeDomainService domainService)
+        {
+            _context = context;
+            _domainService = domainService;
+        }
+
+
+        //agregar trycatch.   En caso de que el metodo genere errores.
+        //se agrego tryatch y valicadion de savechanges.
+
+        public async Task<string> AsignarSucursal(AsignarSucursalRequestDto dto)
+        {
+            try
+            {
+                bool existeAsignacion = await _context.ColaboradoresSucursales
+                    .AnyAsync(cs => cs.IdColaborador == dto.IdColaborador
+                                 && cs.IdSucursal == dto.IdSucursal);
+
+                string validacion = _domainService.ValidarAsignacionSucursal(dto, existeAsignacion);
+
+                if (!string.IsNullOrEmpty(validacion))
+                {
+                    return validacion;
+                }
+
+                var asignacion = new ColaboradorSucursal
+                {
+                    IdColaborador = dto.IdColaborador,
+                    IdSucursal = dto.IdSucursal,
+                    DistanciaKilometros = dto.DistanciaKilometros
+                };
+
+                _context.ColaboradoresSucursales.Add(asignacion);
+                int filasAfectadas = await _context.SaveChangesAsync();
+
+                return filasAfectadas > 0 ? Mensajes.RegistroExitoso : Mensajes.ErrorInesperado;
+            }
+            catch (Exception)
+            {
+                return Mensajes.ErrorInesperado;
+            }
+        }
+    }
+}

@@ -1,0 +1,95 @@
+﻿using Microsoft.EntityFrameworkCore;
+using FSTransportesAPI.Infrastructure.SQLServer;
+using FSTransportesAPI.Infrastructure.SQLServer.Entities;
+using FSTransportesAPI.Features.Viajes.Dtos;
+using FSTransportesAPI.Features.Viajes.Domain.DomainRequirements;
+using FSTransportesAPI.Features.Viajes.Domain.DomainService;
+using FSTransportesAPI.Common;
+using System.Diagnostics.CodeAnalysis;
+
+namespace FSTransportesAPI.Features.Transportistas.Services
+{
+    [ExcludeFromCodeCoverage]
+    public class ViajeTransportistaService
+    {
+        private readonly FSTransportesDbContext _context;
+        private readonly SucursalAppDomain _domainService;
+
+        public ViajeAppService(
+            FSTransportesDbContext context,
+            SucursalAppDomain domainService)
+        {
+            _context = context;
+            _domainService = domainService;
+        }
+
+        public async Task<string> RegistrarViaje(RegistrarViajeRequestDto dto)
+        {
+            try
+            {
+                // 1. Recolección de datos para los Requerimientos (Siguiendo el ejemplo de Comentarios)
+                var usuario = await _context.Usuarios
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync(u => u.IdUsuario == dto.IdUsuarioRegistro);
+
+                decimal distanciaTotal = dto.Detalles.Sum(d => d.DistanciaKilometros);
+
+                // 2. Uso del método Fill (como en tu ejemplo de ComentarioDomainRequirements)
+                var requirements = SucursalDomainRequirements.Fill(
+                    existeUsuario: usuario != null,
+                    usuarioActivo: usuario?.Activo ?? false,
+                    esGerente: usuario?.IdRol == 1, // Asumiendo 1 como Gerente
+                    distanciaTotal: distanciaTotal
+                );
+
+                // 3. El "Juez" (Domain Service) valida
+                string validacionDominio = _domainService.ValidarRegistroViaje(requirements);
+                if (!string.IsNullOrEmpty(validacionDominio))
+                {
+                    return validacionDominio;
+                }
+
+                // 4. Validaciones adicionales de base de datos (Regla: Un viaje por colaborador al día)
+                foreach (var detalle in dto.Detalles)
+                {
+                    bool yaViajoHoy = await _context.ViajesDetalles
+                        .AnyAsync(vd => vd.IdColaborador == detalle.IdColaborador
+                                     && vd.Viaje.FechaViaje.Date == dto.FechaViaje.Date);
+
+                    if (yaViajoHoy)
+                    {
+                        return Mensajes.ERROR_COLABORADOR_YA_VIAJO_HOY;
+                    }
+                }
+
+                // 5. Mapeo y Persistencia
+                var nuevoViaje = new Viaje
+                {
+                    FechaViaje = dto.FechaViaje,
+                    IdSucursal = dto.IdSucursal,
+                    IdTransportista = dto.IdTransportista,
+                    IdUsuarioRegistro = dto.IdUsuarioRegistro,
+                    UsuarioAgrega = dto.IdUsuarioRegistro,
+                    FechaAgrega = DateTime.Now,
+                    Detalles = dto.Detalles.Select(d => new ViajeDetalle
+                    {
+                        IdColaborador = d.IdColaborador,
+                        DistanciaKilometros = d.DistanciaKilometros,
+                        TarifaSugerida = d.TarifaSugerida,
+                        UsuarioAgrega = dto.IdUsuarioRegistro,
+                        FechaAgrega = DateTime.Now
+                    }).ToList()
+                };
+
+                _context.Viajes.Add(nuevoViaje);
+                await _context.SaveChangesAsync();
+
+                return Mensajes.REGISTRO_EXITOSO;
+            }
+            catch (Exception)
+            {
+                return Mensajes.ERROR_INESPERADO;
+            }
+        }
+    }
+}

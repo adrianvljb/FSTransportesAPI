@@ -1,0 +1,43 @@
+@FSTransportesAPI_HostAddress = http://localhost:5109
+
+### =========================================================
+### FEATURE: VIAJES
+### =========================================================
+
+POST {{FSTransportesAPI_HostAddress}}/api/viaje/registrarviaje
+Content-Type: application/json
+Accept: application/json
+
+{
+  "fechaViaje": "2026-04-10T00:00:00Z",
+  "idSucursal": 1,
+  "idTransportista": 1,
+  "idUsuarioRegistro": 1,
+  "detalles": [
+    {
+      "idColaborador": 1,
+      "distanciaKilometros": 15.5,
+      "tarifaSugerida": 0
+    },
+    {
+      "idColaborador": 2,
+      "distanciaKilometros": 8.2,
+      "tarifaSugerida": 0
+    }
+  ]
+}
+
+### =========================================================
+### FEATURE: COLABORADORES
+### =========================================================
+
+POST {{FSTransportesAPI_HostAddress}}/api/colaborador/asignarsucursal
+Content-Type: application/json
+Accept: application/json
+
+{
+  "idColaborador": 1,
+  "idSucursal": 2,
+  "distanciaKilometros": 12.4,
+  "idUsuarioRegistro": 1
+}

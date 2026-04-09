@@ -1,0 +1,52 @@
+﻿using FSTransportesAPI.Common;
+
+
+namespace FSTransportesAPI.Features.Transportistas.Domain.DomainRequirements
+{
+    public class ViajeTransportistaDomainRequirements
+    {
+        public bool UsuarioExiste { get; set; }
+        public bool UsuarioActivo { get; set; }
+        public bool EsGerente { get; set; }
+        public decimal DistanciaTotal { get; set; }
+
+        public static SucursalDomainRequirements Fill(
+            bool existeUsuario,
+            bool usuarioActivo,
+            bool esGerente,
+            decimal distanciaTotal)
+        {
+            return new SucursalDomainRequirements
+            {
+                UsuarioExiste = existeUsuario,
+                UsuarioActivo = usuarioActivo,
+                EsGerente = esGerente,
+                DistanciaTotal = distanciaTotal
+            };
+        }
+
+        public bool EsValido()
+        {
+            return UsuarioExiste && UsuarioActivo && EsGerente && DistanciaTotal <= 100;
+        }
+
+        public List<string> ObtenerErrores()
+        {
+            List<string> errores = new List<string>();
+
+            if (!UsuarioExiste)
+                errores.Add(Mensajes.ERROR_USUARIO_NO_ENCONTRADO);
+
+            if (UsuarioExiste && !UsuarioActivo)
+                errores.Add(Mensajes.ERROR_USUARIO_INACTIVO);
+
+            if (UsuarioExiste && !EsGerente)
+                errores.Add(Mensajes.ERROR_ROL_NO_AUTORIZADO);
+
+            if (DistanciaTotal > 100)
+                errores.Add(Mensajes.ERROR_LIMITE_KILOMETRAJE_VIAJE);
+
+            return errores;
+        }
+    }
+}

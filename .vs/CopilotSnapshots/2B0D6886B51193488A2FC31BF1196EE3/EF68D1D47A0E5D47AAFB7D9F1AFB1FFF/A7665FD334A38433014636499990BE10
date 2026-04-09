@@ -1,0 +1,29 @@
+﻿using FSTransportesAPI.Business;
+using FSTransportesAPI.Data;
+using Microsoft.EntityFrameworkCore;
+
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddControllers();
+builder.Services.AddOpenApi();
+
+
+builder.Services.AddDbContext<FSTransportesContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddScoped<ViajeDomainService>();  //se agrego el servicio de dominio para separar la logica de negocio de la logica de aplicacion y mejorar la mantenibilidad del codigo
+builder.Services.AddScoped<ColaboradorService>();
+builder.Services.AddScoped<ViajeService>();
+
+var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
+{
+    app.MapOpenApi();
+}
+
+app.UseHttpsRedirection();
+app.UseAuthorization();
+app.MapControllers();
+
+app.Run();
